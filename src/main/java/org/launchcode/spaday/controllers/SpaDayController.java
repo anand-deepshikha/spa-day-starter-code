@@ -11,13 +11,34 @@ public class SpaDayController {
 
     public boolean checkSkinType(String skinType, String facialType) {
         if (skinType.equals("oily")) {
-            return facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating");
+            if (facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            //return facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating");
         }
         else if (skinType.equals("combination")) {
-            return facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating") || facialType.equals("Enzyme Peel");
+            if (facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating") || facialType.equals("Enzyme Peel")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            //return facialType.equals("Microdermabrasion") || facialType.equals("Rejuvenating") || facialType.equals("Enzyme Peel");
+        }
+        else if (skinType.equals("normal")) {
+            return true;
         }
         else if (skinType.equals("dry")) {
-            return facialType.equals("Rejuvenating") || facialType.equals("Hydrofacial");
+            if (facialType.equals("Rejuvenating") || facialType.equals("Hydrofacial")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            //return facialType.equals("Rejuvenating") || facialType.equals("Hydrofacial");
         }
         else {
             return true;
@@ -50,7 +71,7 @@ public class SpaDayController {
     @PostMapping(value="")
     public String spaMenu(@RequestParam String name, @RequestParam String skintype, @RequestParam String manipedi, Model model) {
 
-        ArrayList<String> facials = new ArrayList<>();
+        ArrayList<String> facials = new ArrayList<String>();
         facials.add("Microdermabrasion");
         facials.add("Hydrofacial");
         facials.add("Rejuvenating");
@@ -62,7 +83,10 @@ public class SpaDayController {
                 appropriateFacials.add(facials.get(i));
             }
         }
-
+        model.addAttribute("name", name);
+        model.addAttribute("skintype", skintype);
+        model.addAttribute("manipedi", manipedi);
+        model.addAttribute("appropriateFacials", appropriateFacials);
         return "menu";
     }
 }
